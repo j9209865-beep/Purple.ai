@@ -33,10 +33,10 @@ nav { display: flex; align-items: center; justify-content: space-between; paddin
 .bots-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; padding: 0 2rem 3rem; max-width: 1100px; margin: 0 auto; }
 .bot-card { background: #12102a; border: 0.5px solid #2a1f4e; border-radius: 16px; padding: 1.25rem; cursor: pointer; transition: all 0.2s; }
 .bot-card:hover { border-color: #7c3aed; background: #1a1540; transform: translateY(-2px); }
-.bot-avatar { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 12px; background: #1e1040; }
+.bot-avatar { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 12px; background: #1e1040; overflow: hidden; }
+.bot-avatar img { width: 100%; height: 100%; object-fit: cover; }
 .bot-name { font-size: 15px; font-weight: 600; color: #e9d5ff; margin-bottom: 4px; }
-.bot-desc { font-size: 12px; color: #6b7280; line-height: 1.5; margin-bottom: 10px; }
-.bot-tag { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 12px; background: #1e1040; color: #a78bfa; border: 0.5px solid #4c1d95; }
+.bot-resume { font-size: 12px; color: #9ca3af; line-height: 1.5; margin-bottom: 10px; }
 .chat-btn { width: 100%; margin-top: 12px; padding: 8px; border-radius: 12px; background: #7c3aed; color: #fff; border: none; font-size: 13px; cursor: pointer; font-family: inherit; transition: background 0.2s; }
 .chat-btn:hover { background: #6d28d9; }
 .create-section { padding: 0 2rem 3rem; max-width: 600px; margin: 0 auto; }
@@ -46,17 +46,34 @@ nav { display: flex; align-items: center; justify-content: space-between; paddin
 .form-input { width: 100%; padding: 10px 14px; background: #0d0d1a; border: 0.5px solid #2a1f4e; border-radius: 10px; color: #e9d5ff; font-size: 14px; font-family: inherit; outline: none; transition: border 0.2s; }
 .form-input:focus { border-color: #7c3aed; }
 .form-input::placeholder { color: #374151; }
-textarea.form-input { resize: vertical; min-height: 90px; }
-.emoji-picker { display: flex; gap: 8px; flex-wrap: wrap; }
-.emoji-opt { width: 44px; height: 44px; border-radius: 50%; background: #1e1040; border: 0.5px solid #2a1f4e; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; transition: all 0.2s; }
-.emoji-opt.selected, .emoji-opt:hover { border-color: #7c3aed; background: #2e1065; }
+textarea.form-input { resize: vertical; min-height: 60px; }
+.greeting-input { min-height: 160px; }
+.avatar-upload { display: flex; align-items: center; gap: 16px; }
+.avatar-preview { width: 64px; height: 64px; border-radius: 50%; background: #1e1040; border: 2px dashed #4c1d95; display: flex; align-items: center; justify-content: center; font-size: 28px; overflow: hidden; cursor: pointer; transition: border 0.2s; }
+.avatar-preview:hover { border-color: #7c3aed; }
+.avatar-preview img { width: 100%; height: 100%; object-fit: cover; }
+.upload-btn { padding: 8px 16px; background: #1e1040; border: 0.5px solid #4c1d95; color: #a78bfa; border-radius: 10px; cursor: pointer; font-size: 13px; font-family: inherit; transition: all 0.2s; }
+.upload-btn:hover { background: #2e1065; border-color: #7c3aed; }
 .chat-page { display: flex; flex-direction: column; height: calc(100vh - 65px); }
 .chat-header { display: flex; align-items: center; gap: 12px; padding: 1rem 1.5rem; border-bottom: 0.5px solid #2a1f4e; background: #12102a; }
-.chat-avatar-sm { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; background: #1e1040; }
+.chat-avatar-sm { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; background: #1e1040; overflow: hidden; flex-shrink: 0; }
+.chat-avatar-sm img { width: 100%; height: 100%; object-fit: cover; }
 .chat-name { font-size: 16px; font-weight: 600; color: #e9d5ff; }
 .chat-status { font-size: 12px; color: #7c3aed; }
-.back-btn { margin-left: auto; background: transparent; border: 0.5px solid #2a1f4e; color: #9ca3af; padding: 6px 14px; border-radius: 12px; cursor: pointer; font-size: 13px; font-family: inherit; }
+.back-btn { margin-left: auto; background: transparent; border: 0.5px solid #2a1f4e; color: #9ca3af; padding: 6px 14px; border-radius: 12px; cursor: pointer; font-size: 13px; font-family: inherit; flex-shrink: 0; }
 .back-btn:hover { border-color: #4c1d95; color: #c4b5fd; }
+.chat-body { display: flex; flex: 1; overflow: hidden; }
+.history-panel { width: 220px; border-right: 0.5px solid #2a1f4e; background: #0d0d1a; display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0; }
+.history-title { font-size: 12px; color: #6b7280; padding: 12px 14px 8px; border-bottom: 0.5px solid #2a1f4e; letter-spacing: 0.05em; }
+.history-list { flex: 1; overflow-y: auto; padding: 8px; display: flex; flex-direction: column; gap: 4px; }
+.history-item { padding: 8px 10px; border-radius: 10px; cursor: pointer; transition: background 0.2s; border: 0.5px solid transparent; }
+.history-item:hover { background: #12102a; border-color: #2a1f4e; }
+.history-item.active { background: #1e1040; border-color: #4c1d95; }
+.history-item-date { font-size: 11px; color: #6b7280; margin-bottom: 2px; }
+.history-item-preview { font-size: 12px; color: #9ca3af; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.new-conv-btn { margin: 8px; padding: 8px; border-radius: 10px; background: #1e1040; border: 0.5px solid #4c1d95; color: #a78bfa; font-size: 12px; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+.new-conv-btn:hover { background: #2e1065; }
+.chat-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
 .messages { flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 12px; }
 .msg { max-width: 75%; padding: 10px 14px; border-radius: 16px; font-size: 14px; line-height: 1.6; }
 .msg-bot { background: #12102a; border: 0.5px solid #2a1f4e; color: #e9d5ff; align-self: flex-start; border-bottom-left-radius: 4px; }
@@ -65,16 +82,13 @@ textarea.form-input { resize: vertical; min-height: 90px; }
 .chat-input { flex: 1; padding: 10px 16px; background: #0d0d1a; border: 0.5px solid #2a1f4e; border-radius: 20px; color: #e9d5ff; font-size: 14px; font-family: inherit; outline: none; }
 .chat-input:focus { border-color: #7c3aed; }
 .chat-input::placeholder { color: #374151; }
-.send-btn { width: 42px; height: 42px; border-radius: 50%; background: #7c3aed; border: none; color: #fff; cursor: pointer; font-size: 20px; transition: background 0.2s; display: flex; align-items: center; justify-content: center; }
+.send-btn { width: 42px; height: 42px; border-radius: 50%; background: #7c3aed; border: none; color: #fff; cursor: pointer; font-size: 20px; transition: background 0.2s; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .send-btn:hover { background: #6d28d9; }
 .typing { display: flex; gap: 4px; align-items: center; padding: 10px 14px; background: #12102a; border: 0.5px solid #2a1f4e; border-radius: 16px; border-bottom-left-radius: 4px; align-self: flex-start; }
 .dot { width: 7px; height: 7px; border-radius: 50%; background: #7c3aed; animation: bounce 1.2s infinite; }
 .dot:nth-child(2) { animation-delay: 0.2s; }
 .dot:nth-child(3) { animation-delay: 0.4s; }
 @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
-.api-banner { background: #1e1040; border: 0.5px solid #4c1d95; border-radius: 12px; padding: 1rem 1.5rem; margin: 1rem 2rem; font-size: 13px; color: #a78bfa; text-align: center; }
-.api-banner input { background: #0d0d1a; border: 0.5px solid #4c1d95; border-radius: 8px; padding: 6px 12px; color: #e9d5ff; font-size: 13px; font-family: inherit; outline: none; width: 280px; margin: 0 8px; }
-.api-banner button { background: #7c3aed; color: #fff; border: none; border-radius: 8px; padding: 6px 14px; font-size: 13px; cursor: pointer; font-family: inherit; }
 </style>
 </head>
 <body>
@@ -86,12 +100,6 @@ textarea.form-input { resize: vertical; min-height: 90px; }
     <button class="btn btn-ghost" onclick="showPage('create')">Créer un bot</button>
   </div>
 </nav>
-
-<div id="api-banner" class="api-banner">
-  🔑 Entre ta clé API Anthropic pour activer l'IA :
-  <input type="password" id="api-key-input" placeholder="sk-ant-api03-...">
-  <button onclick="saveApiKey()">Sauvegarder</button>
-</div>
 
 <div id="page-home" class="page active">
   <div class="hero">
@@ -117,24 +125,35 @@ textarea.form-input { resize: vertical; min-height: 90px; }
   <div class="create-section">
     <div class="form-card">
       <div class="form-group">
-        <label class="form-label">Avatar</label>
-        <div class="emoji-picker" id="emoji-picker"></div>
+        <label class="form-label">Photo du personnage</label>
+        <div class="avatar-upload">
+          <div class="avatar-preview" id="avatar-preview" onclick="document.getElementById('avatar-input').click()">📷</div>
+          <div>
+            <button class="upload-btn" onclick="document.getElementById('avatar-input').click()">Choisir une image</button>
+            <p style="font-size:12px; color:#374151; margin-top:6px;">JPG, PNG — recommandé carré</p>
+          </div>
+        </div>
+        <input type="file" id="avatar-input" accept="image/*" style="display:none" onchange="previewAvatar(event)">
       </div>
       <div class="form-group">
         <label class="form-label">Nom du personnage</label>
         <input class="form-input" id="bot-name" type="text" placeholder="Ex: Luna, Shadow, Aria...">
       </div>
       <div class="form-group">
+        <label class="form-label">Résumé <span style="color:#6b7280;">(affiché sous le nom)</span></label>
+        <input class="form-input" id="bot-resume" type="text" placeholder="Ex: Gardienne des rêves et des secrets...">
+      </div>
+      <div class="form-group">
         <label class="form-label">Personnalité</label>
         <input class="form-input" id="bot-personality" type="text" placeholder="Ex: Mystérieuse, romantique, poétique...">
       </div>
       <div class="form-group">
-        <label class="form-label">Description</label>
-        <textarea class="form-input" id="bot-desc" placeholder="Décris ton personnage, son histoire, son univers..."></textarea>
+        <label class="form-label">Description complète</label>
+        <textarea class="form-input" id="bot-desc" placeholder="Décris son histoire, son univers, ses habitudes..." maxlength="10000"></textarea>
       </div>
       <div class="form-group">
         <label class="form-label">Message d'accueil</label>
-        <input class="form-input" id="bot-greeting" type="text" placeholder="Ce que dit le bot en premier...">
+        <textarea class="form-input greeting-input" id="bot-greeting" placeholder="Ce que dit le bot en premier... (10 000 caractères max)" maxlength="10000"></textarea>
       </div>
       <button class="btn-large btn-purple" style="width:100%;" onclick="createBot()">Créer le personnage ✨</button>
     </div>
@@ -151,35 +170,45 @@ textarea.form-input { resize: vertical; min-height: 90px; }
       </div>
       <button class="back-btn" onclick="showPage('home')">← Retour</button>
     </div>
-    <div class="messages" id="messages"></div>
-    <div class="chat-input-area">
-      <input class="chat-input" id="chat-input" placeholder="Écris ton message..." onkeydown="if(event.key==='Enter')sendMessage()">
-      <button class="send-btn" onclick="sendMessage()">➤</button>
+    <div class="chat-body">
+      <div class="history-panel">
+        <div class="history-title">CONVERSATIONS</div>
+        <button class="new-conv-btn" onclick="newConversation()">+ Nouvelle conversation</button>
+        <div class="history-list" id="history-list"></div>
+      </div>
+      <div class="chat-main">
+        <div class="messages" id="messages"></div>
+        <div class="chat-input-area">
+          <input class="chat-input" id="chat-input" placeholder="Écris ton message..." onkeydown="if(event.key==='Enter')sendMessage()">
+          <button class="send-btn" onclick="sendMessage()">➤</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
-const emojis = ['🌙','⭐','🔮','🦋','🌸','🐺','👁️','🌊','🔥','💜','🗡️','🌹','🦊','🐉','🌺'];
-let selectedEmoji = emojis[0];
 let currentBot = null;
-let apiKey = localStorage.getItem('purpleai_key') || '';
-let bots = JSON.parse(localStorage.getItem('purpleai_bots') || 'null') || [
-  { name: 'Luna', emoji: '🌙', personality: 'Mystérieuse et poétique', desc: 'Gardienne des rêves et des secrets de la nuit.', greeting: 'Je t\'attendais... Les étoiles m\'ont parlé de toi.' },
-  { name: 'Shadow', emoji: '👁️', personality: 'Sombre et énigmatique', desc: 'Une âme ancienne qui observe tout en silence.', greeting: 'Tu as osé entrer dans l\'obscurité. Intéressant.' },
-  { name: 'Aria', emoji: '🌸', personality: 'Douce et romantique', desc: 'Elle vit pour les histoires d\'amour et la poésie.', greeting: 'Bonjour... chaque rencontre est une nouvelle histoire 💜' },
-  { name: 'Zephyr', emoji: '🌊', personality: 'Libre et aventurier', desc: 'Esprit du vent qui ne s\'attache à rien.', greeting: 'Le monde est grand. Où veux-tu aller aujourd\'hui ?' },
-];
+let currentAvatar = null;
+let currentBotIdx = null;
 let messages = [];
+let currentConvId = null;
 
-if (apiKey) document.getElementById('api-banner').style.display = 'none';
+let bots = JSON.parse(localStorage.getItem('purpleai_bots') || 'null') || [
+  { name: 'Luna', avatar: null, emoji: '🌙', resume: 'Gardienne des rêves et des secrets de la nuit.', personality: 'Mystérieuse et poétique', desc: 'Tu es Luna, une entité mystérieuse liée à la lune et aux rêves.', greeting: 'Je t\'attendais... Les étoiles m\'ont parlé de toi.' },
+  { name: 'Shadow', avatar: null, emoji: '👁️', resume: 'Une âme ancienne qui observe tout en silence.', personality: 'Sombre et énigmatique', desc: 'Tu es Shadow, une présence sombre et ancienne qui voit tout.', greeting: 'Tu as osé entrer dans l\'obscurité. Intéressant.' },
+  { name: 'Aria', avatar: null, emoji: '🌸', resume: 'Elle vit pour les histoires d\'amour et la poésie.', personality: 'Douce et romantique', desc: 'Tu es Aria, une âme romantique qui vit pour la beauté et l\'amour.', greeting: 'Bonjour... chaque rencontre est une nouvelle histoire 💜' },
+  { name: 'Zephyr', avatar: null, emoji: '🌊', resume: 'Esprit du vent qui ne s\'attache à rien.', personality: 'Libre et aventurier', desc: 'Tu es Zephyr, un esprit libre comme le vent, toujours en mouvement.', greeting: 'Le monde est grand. Où veux-tu aller aujourd\'hui ?' },
+];
 
-function saveApiKey() {
-  const key = document.getElementById('api-key-input').value.trim();
-  if (!key) return;
-  apiKey = key;
-  localStorage.setItem('purpleai_key', key);
-  document.getElementById('api-banner').style.display = 'none';
+function getConvKey(botIdx) { return `purpleai_conv_${botIdx}`; }
+
+function getConversations(botIdx) {
+  try { return JSON.parse(localStorage.getItem(getConvKey(botIdx)) || '[]'); } catch(e) { return []; }
+}
+
+function saveConversations(botIdx, convs) {
+  try { localStorage.setItem(getConvKey(botIdx), JSON.stringify(convs)); } catch(e) {}
 }
 
 function showPage(id) {
@@ -187,23 +216,29 @@ function showPage(id) {
   document.getElementById('page-' + id).classList.add('active');
 }
 
-function renderEmojis() {
-  const picker = document.getElementById('emoji-picker');
-  picker.innerHTML = emojis.map(e => `<div class="emoji-opt${e===selectedEmoji?' selected':''}" onclick="selectEmoji('${e}')">${e}</div>`).join('');
+function previewAvatar(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    currentAvatar = e.target.result;
+    const preview = document.getElementById('avatar-preview');
+    preview.innerHTML = `<img src="${currentAvatar}" alt="avatar">`;
+  };
+  reader.readAsDataURL(file);
 }
 
-function selectEmoji(e) { selectedEmoji = e; renderEmojis(); }
-
-function saveBots() { localStorage.setItem('purpleai_bots', JSON.stringify(bots)); }
+function saveBots() {
+  try { localStorage.setItem('purpleai_bots', JSON.stringify(bots)); } catch(e) {}
+}
 
 function renderBots() {
   const grid = document.getElementById('bots-grid');
-  grid.innerHTML = bots.map((b,i) => `
+  grid.innerHTML = bots.map((b, i) => `
     <div class="bot-card">
-      <div class="bot-avatar">${b.emoji}</div>
+      <div class="bot-avatar">${b.avatar ? `<img src="${b.avatar}" alt="${b.name}">` : (b.emoji || '🤖')}</div>
       <div class="bot-name">${b.name}</div>
-      <div class="bot-desc">${b.personality}</div>
-      <span class="bot-tag">${b.desc.split(' ').slice(0,4).join(' ')}...</span>
+      <div class="bot-resume">${b.resume || b.personality}</div>
       <button class="chat-btn" onclick="openChat(${i})">Discuter 💜</button>
     </div>
   `).join('');
@@ -211,24 +246,75 @@ function renderBots() {
 
 function createBot() {
   const name = document.getElementById('bot-name').value.trim();
+  const resume = document.getElementById('bot-resume').value.trim();
   const personality = document.getElementById('bot-personality').value.trim();
   const desc = document.getElementById('bot-desc').value.trim();
   const greeting = document.getElementById('bot-greeting').value.trim();
   if (!name) { alert('Donne un nom à ton personnage !'); return; }
-  const bot = { name, emoji: selectedEmoji, personality, desc: desc || personality, greeting: greeting || `Bonjour, je suis ${name}...` };
+  const bot = { name, avatar: currentAvatar, emoji: '🤖', resume: resume || personality, personality, desc: desc || personality, greeting: greeting || `Bonjour, je suis ${name}...` };
   bots.unshift(bot);
   saveBots();
   renderBots();
+  currentAvatar = null;
+  document.getElementById('avatar-preview').innerHTML = '📷';
+  ['bot-name','bot-resume','bot-personality','bot-desc','bot-greeting'].forEach(id => document.getElementById(id).value = '');
   openChat(0);
 }
 
 function openChat(idx) {
   currentBot = bots[idx];
-  messages = [{ role: 'bot', text: currentBot.greeting }];
-  document.getElementById('chat-avatar').textContent = currentBot.emoji;
+  currentBotIdx = idx;
+  document.getElementById('chat-avatar').innerHTML = currentBot.avatar ? `<img src="${currentBot.avatar}" alt="${currentBot.name}">` : (currentBot.emoji || '🤖');
   document.getElementById('chat-bot-name').textContent = currentBot.name;
-  renderMessages();
+  renderHistory();
+  const convs = getConversations(idx);
+  if (convs.length > 0) {
+    loadConversation(convs[0].id);
+  } else {
+    newConversation();
+  }
   showPage('chat');
+}
+
+function newConversation() {
+  currentConvId = Date.now().toString();
+  messages = [{ role: 'bot', text: currentBot.greeting }];
+  saveCurrentConv();
+  renderHistory();
+  renderMessages();
+}
+
+function loadConversation(convId) {
+  const convs = getConversations(currentBotIdx);
+  const conv = convs.find(c => c.id === convId);
+  if (!conv) return;
+  currentConvId = convId;
+  messages = conv.messages;
+  renderHistory();
+  renderMessages();
+}
+
+function saveCurrentConv() {
+  if (!currentConvId) return;
+  const convs = getConversations(currentBotIdx).filter(c => c.id !== currentConvId);
+  const preview = messages.filter(m => m.role === 'user')[0]?.text || 'Nouvelle conversation';
+  convs.unshift({ id: currentConvId, date: new Date().toLocaleDateString('fr-FR'), preview: preview.slice(0, 40), messages });
+  saveConversations(currentBotIdx, convs.slice(0, 20));
+}
+
+function renderHistory() {
+  const list = document.getElementById('history-list');
+  const convs = getConversations(currentBotIdx);
+  if (convs.length === 0) {
+    list.innerHTML = '<div style="font-size:12px; color:#374151; padding: 8px 10px;">Aucune conversation</div>';
+    return;
+  }
+  list.innerHTML = convs.map(c => `
+    <div class="history-item ${c.id === currentConvId ? 'active' : ''}" onclick="loadConversation('${c.id}')">
+      <div class="history-item-date">${c.date}</div>
+      <div class="history-item-preview">${c.preview}</div>
+    </div>
+  `).join('');
 }
 
 function renderMessages() {
@@ -241,7 +327,6 @@ async function sendMessage() {
   const input = document.getElementById('chat-input');
   const text = input.value.trim();
   if (!text) return;
-  if (!apiKey) { alert('Entre ta clé API en haut de la page !'); return; }
   input.value = '';
   messages.push({ role: 'user', text });
   renderMessages();
@@ -252,29 +337,27 @@ async function sendMessage() {
   document.getElementById('messages').scrollTop = 99999;
   try {
     const history = messages.slice(0, -1).map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', content: m.text }));
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch('/api/chat', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': apiKey, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 300,
-        system: `Tu es ${currentBot.name}. Personnalité: ${currentBot.personality}. ${currentBot.desc}. Tu restes toujours dans ton personnage. Tes réponses sont courtes (2-3 phrases max), immersives et dans le style de ta personnalité. Tu parles en français.`,
+        systemPrompt: `Tu es ${currentBot.name}. Personnalité: ${currentBot.personality}. ${currentBot.desc}. Tu restes toujours dans ton personnage. Tes réponses sont courtes (2-3 phrases max), immersives et dans le style de ta personnalité. Tu parles en français.`,
         messages: [...history, { role: 'user', content: text }]
       })
     });
     const data = await res.json();
     typingEl.remove();
-    const reply = data.content?.[0]?.text || '...';
-    messages.push({ role: 'bot', text: reply });
+    messages.push({ role: 'bot', text: data.reply || '...' });
+    saveCurrentConv();
+    renderHistory();
     renderMessages();
   } catch(e) {
     typingEl.remove();
-    messages.push({ role: 'bot', text: 'Une erreur s\'est produite... réessaie.' });
+    messages.push({ role: 'bot', text: 'Une erreur est survenue... réessaie.' });
     renderMessages();
   }
 }
 
-renderEmojis();
 renderBots();
 </script>
 </body>
