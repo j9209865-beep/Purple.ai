@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Purple.ai — Discute avec des personnages uniques</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d0d1a; color: #fff; min-height: 100vh; }
+nav { display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; border-bottom: 0.5px solid #2a1f4e; position: sticky; top: 0; background: #0d0d1a; z-index: 100; }
+.logo { font-size: 22px; font-weight: 600; color: #c4b5fd; cursor: pointer; }
+.logo span { color: #7c3aed; }
+.nav-btns { display: flex; gap: 8px; }
+.btn { padding: 8px 18px; border-radius: 20px; font-size: 14px; cursor: pointer; border: none; font-family: inherit; transition: all 0.2s; }
+.btn-ghost { background: transparent; border: 0.5px solid #4c1d95; color: #c4b5fd; }
+.btn-ghost:hover { background: #1e1040; }
+.btn-primary { background: #7c3aed; color: #fff; }
+.btn-primary:hover { background: #6d28d9; }
+.page { display: none; }
+.page.active { display: block; }
+.hero { text-align: center; padding: 4rem 2rem 3rem; }
+.hero h1 { font-size: 40px; font-weight: 600; line-height: 1.2; margin-bottom: 1rem; color: #ede9fe; }
+.hero h1 span { color: #a78bfa; }
+.hero p { font-size: 16px; color: #9ca3af; max-width: 480px; margin: 0 auto 2rem; line-height: 1.7; }
+.hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn-large { padding: 12px 28px; font-size: 16px; border-radius: 24px; cursor: pointer; border: none; font-family: inherit; transition: all 0.2s; }
+.btn-purple { background: #7c3aed; color: #fff; }
+.btn-purple:hover { background: #6d28d9; transform: translateY(-1px); }
+.btn-outline { background: transparent; border: 0.5px solid #4c1d95; color: #c4b5fd; }
+.btn-outline:hover { background: #1e1040; }
+.section-title { text-align: center; font-size: 22px; font-weight: 600; color: #ede9fe; margin-bottom: 0.5rem; }
+.section-sub { text-align: center; font-size: 14px; color: #6b7280; margin-bottom: 2rem; }
+.bots-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; padding: 0 2rem 3rem; max-width: 1100px; margin: 0 auto; }
+.bot-card { background: #12102a; border: 0.5px solid #2a1f4e; border-radius: 16px; padding: 1.25rem; cursor: pointer; transition: all 0.2s; }
+.bot-card:hover { border-color: #7c3aed; background: #1a1540; transform: translateY(-2px); }
+.bot-avatar { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 12px; background: #1e1040; }
+.bot-name { font-size: 15px; font-weight: 600; color: #e9d5ff; margin-bottom: 4px; }
+.bot-desc { font-size: 12px; color: #6b7280; line-height: 1.5; margin-bottom: 10px; }
+.bot-tag { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 12px; background: #1e1040; color: #a78bfa; border: 0.5px solid #4c1d95; }
+.chat-btn { width: 100%; margin-top: 12px; padding: 8px; border-radius: 12px; background: #7c3aed; color: #fff; border: none; font-size: 13px; cursor: pointer; font-family: inherit; transition: background 0.2s; }
+.chat-btn:hover { background: #6d28d9; }
+.create-section { padding: 0 2rem 3rem; max-width: 600px; margin: 0 auto; }
+.form-card { background: #12102a; border: 0.5px solid #2a1f4e; border-radius: 16px; padding: 1.5rem; }
+.form-group { margin-bottom: 1.25rem; }
+.form-label { font-size: 13px; color: #9ca3af; margin-bottom: 6px; display: block; }
+.form-input { width: 100%; padding: 10px 14px; background: #0d0d1a; border: 0.5px solid #2a1f4e; border-radius: 10px; color: #e9d5ff; font-size: 14px; font-family: inherit; outline: none; transition: border 0.2s; }
+.form-input:focus { border-color: #7c3aed; }
+.form-input::placeholder { color: #374151; }
+textarea.form-input { resize: vertical; min-height: 90px; }
+.emoji-picker { display: flex; gap: 8px; flex-wrap: wrap; }
+.emoji-opt { width: 44px; height: 44px; border-radius: 50%; background: #1e1040; border: 0.5px solid #2a1f4e; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; transition: all 0.2s; }
+.emoji-opt.selected, .emoji-opt:hover { border-color: #7c3aed; background: #2e1065; }
+.chat-page { display: flex; flex-direction: column; height: calc(100vh - 65px); }
+.chat-header { display: flex; align-items: center; gap: 12px; padding: 1rem 1.5rem; border-bottom: 0.5px solid #2a1f4e; background: #12102a; }
+.chat-avatar-sm { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; background: #1e1040; }
+.chat-name { font-size: 16px; font-weight: 600; color: #e9d5ff; }
+.chat-status { font-size: 12px; color: #7c3aed; }
+.back-btn { margin-left: auto; background: transparent; border: 0.5px solid #2a1f4e; color: #9ca3af; padding: 6px 14px; border-radius: 12px; cursor: pointer; font-size: 13px; font-family: inherit; }
+.back-btn:hover { border-color: #4c1d95; color: #c4b5fd; }
+.messages { flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 12px; }
+.msg { max-width: 75%; padding: 10px 14px; border-radius: 16px; font-size: 14px; line-height: 1.6; }
+.msg-bot { background: #12102a; border: 0.5px solid #2a1f4e; color: #e9d5ff; align-self: flex-start; border-bottom-left-radius: 4px; }
+.msg-user { background: #7c3aed; color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
+.chat-input-area { display: flex; gap: 10px; padding: 1rem 1.5rem; background: #12102a; border-top: 0.5px solid #2a1f4e; }
+.chat-input { flex: 1; padding: 10px 16px; background: #0d0d1a; border: 0.5px solid #2a1f4e; border-radius: 20px; color: #e9d5ff; font-size: 14px; font-family: inherit; outline: none; }
+.chat-input:focus { border-color: #7c3aed; }
+.chat-input::placeholder { color: #374151; }
+.send-btn { width: 42px; height: 42px; border-radius: 50%; background: #7c3aed; border: none; color: #fff; cursor: pointer; font-size: 20px; transition: background 0.2s; display: flex; align-items: center; justify-content: center; }
+.send-btn:hover { background: #6d28d9; }
+.typing { display: flex; gap: 4px; align-items: center; padding: 10px 14px; background: #12102a; border: 0.5px solid #2a1f4e; border-radius: 16px; border-bottom-left-radius: 4px; align-self: flex-start; }
+.dot { width: 7px; height: 7px; border-radius: 50%; background: #7c3aed; animation: bounce 1.2s infinite; }
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
+.api-banner { background: #1e1040; border: 0.5px solid #4c1d95; border-radius: 12px; padding: 1rem 1.5rem; margin: 1rem 2rem; font-size: 13px; color: #a78bfa; text-align: center; }
+.api-banner input { background: #0d0d1a; border: 0.5px solid #4c1d95; border-radius: 8px; padding: 6px 12px; color: #e9d5ff; font-size: 13px; font-family: inherit; outline: none; width: 280px; margin: 0 8px; }
+.api-banner button { background: #7c3aed; color: #fff; border: none; border-radius: 8px; padding: 6px 14px; font-size: 13px; cursor: pointer; font-family: inherit; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo" onclick="showPage('home')">Purple<span>.</span>ai</div>
+  <div class="nav-btns">
+    <button class="btn btn-ghost" onclick="showPage('home')">Accueil</button>
+    <button class="btn btn-ghost" onclick="showPage('create')">Créer un bot</button>
+  </div>
+</nav>
+
+<div id="api-banner" class="api-banner">
+  🔑 Entre ta clé API Anthropic pour activer l'IA :
+  <input type="password" id="api-key-input" placeholder="sk-ant-api03-...">
+  <button onclick="saveApiKey()">Sauvegarder</button>
+</div>
+
+<div id="page-home" class="page active">
+  <div class="hero">
+    <h1>Discute avec des personnages <span>uniques</span></h1>
+    <p>Crée tes propres bots ou explore ceux de la communauté. Des discussions profondes, immersives et inoubliables.</p>
+    <div class="hero-btns">
+      <button class="btn-large btn-purple" onclick="showPage('create')">Créer un personnage</button>
+      <button class="btn-large btn-outline" onclick="document.getElementById('bots').scrollIntoView({behavior:'smooth'})">Explorer les bots</button>
+    </div>
+  </div>
+  <div id="bots">
+    <p class="section-title">Personnages populaires</p>
+    <p class="section-sub">Créés par la communauté</p>
+    <div class="bots-grid" id="bots-grid"></div>
+  </div>
+</div>
+
+<div id="page-create" class="page">
+  <div style="padding: 2rem 2rem 1rem; text-align:center;">
+    <p class="section-title">Crée ton personnage</p>
+    <p class="section-sub">Donne-lui une âme</p>
+  </div>
+  <div class="create-section">
+    <div class="form-card">
+      <div class="form-group">
+        <label class="form-label">Avatar</label>
+        <div class="emoji-picker" id="emoji-picker"></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nom du personnage</label>
+        <input class="form-input" id="bot-name" type="text" placeholder="Ex: Luna, Shadow, Aria...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Personnalité</label>
+        <input class="form-input" id="bot-personality" type="text" placeholder="Ex: Mystérieuse, romantique, poétique...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <textarea class="form-input" id="bot-desc" placeholder="Décris ton personnage, son histoire, son univers..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message d'accueil</label>
+        <input class="form-input" id="bot-greeting" type="text" placeholder="Ce que dit le bot en premier...">
+      </div>
+      <button class="btn-large btn-purple" style="width:100%;" onclick="createBot()">Créer le personnage ✨</button>
+    </div>
+  </div>
+</div>
+
+<div id="page-chat" class="page">
+  <div class="chat-page">
+    <div class="chat-header">
+      <div class="chat-avatar-sm" id="chat-avatar"></div>
+      <div>
+        <div class="chat-name" id="chat-bot-name"></div>
+        <div class="chat-status">En ligne</div>
+      </div>
+      <button class="back-btn" onclick="showPage('home')">← Retour</button>
+    </div>
+    <div class="messages" id="messages"></div>
+    <div class="chat-input-area">
+      <input class="chat-input" id="chat-input" placeholder="Écris ton message..." onkeydown="if(event.key==='Enter')sendMessage()">
+      <button class="send-btn" onclick="sendMessage()">➤</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const emojis = ['🌙','⭐','🔮','🦋','🌸','🐺','👁️','🌊','🔥','💜','🗡️','🌹','🦊','🐉','🌺'];
+let selectedEmoji = emojis[0];
+let currentBot = null;
+let apiKey = localStorage.getItem('purpleai_key') || '';
+let bots = JSON.parse(localStorage.getItem('purpleai_bots') || 'null') || [
+  { name: 'Luna', emoji: '🌙', personality: 'Mystérieuse et poétique', desc: 'Gardienne des rêves et des secrets de la nuit.', greeting: 'Je t\'attendais... Les étoiles m\'ont parlé de toi.' },
+  { name: 'Shadow', emoji: '👁️', personality: 'Sombre et énigmatique', desc: 'Une âme ancienne qui observe tout en silence.', greeting: 'Tu as osé entrer dans l\'obscurité. Intéressant.' },
+  { name: 'Aria', emoji: '🌸', personality: 'Douce et romantique', desc: 'Elle vit pour les histoires d\'amour et la poésie.', greeting: 'Bonjour... chaque rencontre est une nouvelle histoire 💜' },
+  { name: 'Zephyr', emoji: '🌊', personality: 'Libre et aventurier', desc: 'Esprit du vent qui ne s\'attache à rien.', greeting: 'Le monde est grand. Où veux-tu aller aujourd\'hui ?' },
+];
+let messages = [];
+
+if (apiKey) document.getElementById('api-banner').style.display = 'none';
+
+function saveApiKey() {
+  const key = document.getElementById('api-key-input').value.trim();
+  if (!key) return;
+  apiKey = key;
+  localStorage.setItem('purpleai_key', key);
+  document.getElementById('api-banner').style.display = 'none';
+}
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+}
+
+function renderEmojis() {
+  const picker = document.getElementById('emoji-picker');
+  picker.innerHTML = emojis.map(e => `<div class="emoji-opt${e===selectedEmoji?' selected':''}" onclick="selectEmoji('${e}')">${e}</div>`).join('');
+}
+
+function selectEmoji(e) { selectedEmoji = e; renderEmojis(); }
+
+function saveBots() { localStorage.setItem('purpleai_bots', JSON.stringify(bots)); }
+
+function renderBots() {
+  const grid = document.getElementById('bots-grid');
+  grid.innerHTML = bots.map((b,i) => `
+    <div class="bot-card">
+      <div class="bot-avatar">${b.emoji}</div>
+      <div class="bot-name">${b.name}</div>
+      <div class="bot-desc">${b.personality}</div>
+      <span class="bot-tag">${b.desc.split(' ').slice(0,4).join(' ')}...</span>
+      <button class="chat-btn" onclick="openChat(${i})">Discuter 💜</button>
+    </div>
+  `).join('');
+}
+
+function createBot() {
+  const name = document.getElementById('bot-name').value.trim();
+  const personality = document.getElementById('bot-personality').value.trim();
+  const desc = document.getElementById('bot-desc').value.trim();
+  const greeting = document.getElementById('bot-greeting').value.trim();
+  if (!name) { alert('Donne un nom à ton personnage !'); return; }
+  const bot = { name, emoji: selectedEmoji, personality, desc: desc || personality, greeting: greeting || `Bonjour, je suis ${name}...` };
+  bots.unshift(bot);
+  saveBots();
+  renderBots();
+  openChat(0);
+}
+
+function openChat(idx) {
+  currentBot = bots[idx];
+  messages = [{ role: 'bot', text: currentBot.greeting }];
+  document.getElementById('chat-avatar').textContent = currentBot.emoji;
+  document.getElementById('chat-bot-name').textContent = currentBot.name;
+  renderMessages();
+  showPage('chat');
+}
+
+function renderMessages() {
+  const el = document.getElementById('messages');
+  el.innerHTML = messages.map(m => `<div class="msg msg-${m.role}">${m.text}</div>`).join('');
+  el.scrollTop = el.scrollHeight;
+}
+
+async function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text) return;
+  if (!apiKey) { alert('Entre ta clé API en haut de la page !'); return; }
+  input.value = '';
+  messages.push({ role: 'user', text });
+  renderMessages();
+  const typingEl = document.createElement('div');
+  typingEl.className = 'typing';
+  typingEl.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+  document.getElementById('messages').appendChild(typingEl);
+  document.getElementById('messages').scrollTop = 99999;
+  try {
+    const history = messages.slice(0, -1).map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', content: m.text }));
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-api-key': apiKey, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 300,
+        system: `Tu es ${currentBot.name}. Personnalité: ${currentBot.personality}. ${currentBot.desc}. Tu restes toujours dans ton personnage. Tes réponses sont courtes (2-3 phrases max), immersives et dans le style de ta personnalité. Tu parles en français.`,
+        messages: [...history, { role: 'user', content: text }]
+      })
+    });
+    const data = await res.json();
+    typingEl.remove();
+    const reply = data.content?.[0]?.text || '...';
+    messages.push({ role: 'bot', text: reply });
+    renderMessages();
+  } catch(e) {
+    typingEl.remove();
+    messages.push({ role: 'bot', text: 'Une erreur s\'est produite... réessaie.' });
+    renderMessages();
+  }
+}
+
+renderEmojis();
+renderBots();
+</script>
+</body>
+</html>
