@@ -8,24 +8,28 @@ export default async function handler(req, res) {
   const { messages, systemPrompt } = req.body;
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01'
+        'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+        'HTTP-Referer': process.env.SITE_URL,
+        'X-Title': 'Purple.ai'
       },
       body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 300,
-        system: systemPrompt,
-        messages
+        model: 'mistralai/mistral-7b-instruct:free',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          ...messages
+        ],
+        max_tokens: 300
       })
     });
 
     const data = await response.json();
-    res.status(200).json({ reply: data.content?.[0]?.text || '...' });
-  } catch (e) {
+    const reply = data.choices?.[0]?.message?.content || '...';
+    res.status(200).json({ reply });
+  } catch(e) {
     res.status(500).json({ reply: 'Une erreur est survenue...' });
   }
 }
