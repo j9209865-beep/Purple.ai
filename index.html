@@ -2,161 +2,250 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Purple.ai — Discute avec des personnages uniques</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Purple.ai</title>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d0d1a; color: #fff; min-height: 100vh; }
-nav { display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; border-bottom: 0.5px solid #2a1f4e; position: sticky; top: 0; background: #0d0d1a; z-index: 100; }
-.logo { font-size: 22px; font-weight: 600; color: #c4b5fd; cursor: pointer; }
-.logo span { color: #7c3aed; }
-.nav-btns { display: flex; gap: 8px; }
-.btn { padding: 8px 18px; border-radius: 20px; font-size: 14px; cursor: pointer; border: none; font-family: inherit; transition: all 0.2s; }
-.btn-ghost { background: transparent; border: 0.5px solid #4c1d95; color: #c4b5fd; }
-.btn-ghost:hover { background: #1e1040; }
-.btn-primary { background: #7c3aed; color: #fff; }
-.btn-primary:hover { background: #6d28d9; }
-.page { display: none; }
-.page.active { display: block; }
-.hero { text-align: center; padding: 4rem 2rem 3rem; }
-.hero h1 { font-size: 40px; font-weight: 600; line-height: 1.2; margin-bottom: 1rem; color: #ede9fe; }
-.hero h1 span { color: #a78bfa; }
-.hero p { font-size: 16px; color: #9ca3af; max-width: 480px; margin: 0 auto 2rem; line-height: 1.7; }
-.hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-.btn-large { padding: 12px 28px; font-size: 16px; border-radius: 24px; cursor: pointer; border: none; font-family: inherit; transition: all 0.2s; }
-.btn-purple { background: #7c3aed; color: #fff; }
-.btn-purple:hover { background: #6d28d9; transform: translateY(-1px); }
-.btn-outline { background: transparent; border: 0.5px solid #4c1d95; color: #c4b5fd; }
-.btn-outline:hover { background: #1e1040; }
-.section-title { text-align: center; font-size: 22px; font-weight: 600; color: #ede9fe; margin-bottom: 0.5rem; }
-.section-sub { text-align: center; font-size: 14px; color: #6b7280; margin-bottom: 2rem; }
-.bots-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; padding: 0 2rem 3rem; max-width: 1100px; margin: 0 auto; }
-.bot-card { background: #12102a; border: 0.5px solid #2a1f4e; border-radius: 16px; padding: 1.25rem; cursor: pointer; transition: all 0.2s; }
-.bot-card:hover { border-color: #7c3aed; background: #1a1540; transform: translateY(-2px); }
-.bot-avatar { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 12px; background: #1e1040; overflow: hidden; }
-.bot-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.bot-name { font-size: 15px; font-weight: 600; color: #e9d5ff; margin-bottom: 4px; }
-.bot-resume { font-size: 12px; color: #9ca3af; line-height: 1.5; margin-bottom: 10px; }
-.chat-btn { width: 100%; margin-top: 12px; padding: 8px; border-radius: 12px; background: #7c3aed; color: #fff; border: none; font-size: 13px; cursor: pointer; font-family: inherit; transition: background 0.2s; }
-.chat-btn:hover { background: #6d28d9; }
-.create-section { padding: 0 2rem 3rem; max-width: 600px; margin: 0 auto; }
-.form-card { background: #12102a; border: 0.5px solid #2a1f4e; border-radius: 16px; padding: 1.5rem; }
-.form-group { margin-bottom: 1.25rem; }
-.form-label { font-size: 13px; color: #9ca3af; margin-bottom: 6px; display: block; }
-.form-input { width: 100%; padding: 10px 14px; background: #0d0d1a; border: 0.5px solid #2a1f4e; border-radius: 10px; color: #e9d5ff; font-size: 14px; font-family: inherit; outline: none; transition: border 0.2s; }
-.form-input:focus { border-color: #7c3aed; }
-.form-input::placeholder { color: #374151; }
-textarea.form-input { resize: vertical; min-height: 60px; }
-.greeting-input { min-height: 160px; }
-.avatar-upload { display: flex; align-items: center; gap: 16px; }
-.avatar-preview { width: 64px; height: 64px; border-radius: 50%; background: #1e1040; border: 2px dashed #4c1d95; display: flex; align-items: center; justify-content: center; font-size: 28px; overflow: hidden; cursor: pointer; transition: border 0.2s; }
-.avatar-preview:hover { border-color: #7c3aed; }
-.avatar-preview img { width: 100%; height: 100%; object-fit: cover; }
-.upload-btn { padding: 8px 16px; background: #1e1040; border: 0.5px solid #4c1d95; color: #a78bfa; border-radius: 10px; cursor: pointer; font-size: 13px; font-family: inherit; transition: all 0.2s; }
-.upload-btn:hover { background: #2e1065; border-color: #7c3aed; }
-.chat-page { display: flex; flex-direction: column; height: calc(100vh - 65px); }
-.chat-header { display: flex; align-items: center; gap: 12px; padding: 1rem 1.5rem; border-bottom: 0.5px solid #2a1f4e; background: #12102a; }
-.chat-avatar-sm { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; background: #1e1040; overflow: hidden; flex-shrink: 0; }
-.chat-avatar-sm img { width: 100%; height: 100%; object-fit: cover; }
-.chat-name { font-size: 16px; font-weight: 600; color: #e9d5ff; }
-.chat-status { font-size: 12px; color: #7c3aed; }
-.back-btn { margin-left: auto; background: transparent; border: 0.5px solid #2a1f4e; color: #9ca3af; padding: 6px 14px; border-radius: 12px; cursor: pointer; font-size: 13px; font-family: inherit; flex-shrink: 0; }
-.back-btn:hover { border-color: #4c1d95; color: #c4b5fd; }
-.chat-body { display: flex; flex: 1; overflow: hidden; }
-.history-panel { width: 220px; border-right: 0.5px solid #2a1f4e; background: #0d0d1a; display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0; }
-.history-title { font-size: 12px; color: #6b7280; padding: 12px 14px 8px; border-bottom: 0.5px solid #2a1f4e; letter-spacing: 0.05em; }
-.history-list { flex: 1; overflow-y: auto; padding: 8px; display: flex; flex-direction: column; gap: 4px; }
-.history-item { padding: 8px 10px; border-radius: 10px; cursor: pointer; transition: background 0.2s; border: 0.5px solid transparent; }
-.history-item:hover { background: #12102a; border-color: #2a1f4e; }
-.history-item.active { background: #1e1040; border-color: #4c1d95; }
-.history-item-date { font-size: 11px; color: #6b7280; margin-bottom: 2px; }
-.history-item-preview { font-size: 12px; color: #9ca3af; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.new-conv-btn { margin: 8px; padding: 8px; border-radius: 10px; background: #1e1040; border: 0.5px solid #4c1d95; color: #a78bfa; font-size: 12px; cursor: pointer; font-family: inherit; transition: all 0.2s; }
-.new-conv-btn:hover { background: #2e1065; }
-.chat-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-.messages { flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 12px; }
-.msg { max-width: 75%; padding: 10px 14px; border-radius: 16px; font-size: 14px; line-height: 1.6; }
-.msg-bot { background: #12102a; border: 0.5px solid #2a1f4e; color: #e9d5ff; align-self: flex-start; border-bottom-left-radius: 4px; }
-.msg-user { background: #7c3aed; color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
-.chat-input-area { display: flex; gap: 10px; padding: 1rem 1.5rem; background: #12102a; border-top: 0.5px solid #2a1f4e; }
-.chat-input { flex: 1; padding: 10px 16px; background: #0d0d1a; border: 0.5px solid #2a1f4e; border-radius: 20px; color: #e9d5ff; font-size: 14px; font-family: inherit; outline: none; }
-.chat-input:focus { border-color: #7c3aed; }
-.chat-input::placeholder { color: #374151; }
-.send-btn { width: 42px; height: 42px; border-radius: 50%; background: #7c3aed; border: none; color: #fff; cursor: pointer; font-size: 20px; transition: background 0.2s; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.send-btn:hover { background: #6d28d9; }
-.typing { display: flex; gap: 4px; align-items: center; padding: 10px 14px; background: #12102a; border: 0.5px solid #2a1f4e; border-radius: 16px; border-bottom-left-radius: 4px; align-self: flex-start; }
-.dot { width: 7px; height: 7px; border-radius: 50%; background: #7c3aed; animation: bounce 1.2s infinite; }
-.dot:nth-child(2) { animation-delay: 0.2s; }
-.dot:nth-child(3) { animation-delay: 0.4s; }
-@keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0d0d1a;color:#fff;min-height:100vh}
+nav{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:0.5px solid #2a1f4e;position:sticky;top:0;background:#0d0d1a;z-index:100}
+.logo{font-size:20px;font-weight:600;color:#c4b5fd;cursor:pointer}.logo span{color:#7c3aed}
+.nav-right{display:flex;align-items:center;gap:8px}
+.nav-icon{width:34px;height:34px;border-radius:50%;background:#1e1040;border:0.5px solid #2a1f4e;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#a78bfa;font-size:18px;transition:all 0.2s}
+.nav-icon:hover{border-color:#7c3aed}
+.page{display:none}.page.active{display:block}
+.search-bar{display:flex;align-items:center;gap:8px;padding:10px 16px;border-bottom:0.5px solid #2a1f4e}
+.search-input{flex:1;background:#12102a;border:0.5px solid #2a1f4e;border-radius:20px;padding:8px 14px;color:#e9d5ff;font-size:13px;outline:none;font-family:inherit}
+.search-input::placeholder{color:#374151}.search-input:focus{border-color:#7c3aed}
+.cats{display:flex;gap:6px;overflow-x:auto;padding:10px 16px;border-bottom:0.5px solid #2a1f4e;scrollbar-width:none}
+.cats::-webkit-scrollbar{display:none}
+.cat{flex-shrink:0;padding:5px 12px;border-radius:16px;font-size:12px;background:#12102a;border:0.5px solid #2a1f4e;color:#9ca3af;cursor:pointer;white-space:nowrap;transition:all 0.2s}
+.cat.active,.cat:hover{background:#1e1040;border-color:#7c3aed;color:#c4b5fd}
+.bots-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 16px}
+.bot-card{background:#12102a;border:0.5px solid #2a1f4e;border-radius:14px;padding:12px;cursor:pointer;transition:all 0.2s;position:relative}
+.bot-card:hover{border-color:#7c3aed}
+.bot-avatar{width:48px;height:48px;border-radius:50%;background:#1e1040;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:8px;overflow:hidden}
+.bot-avatar img{width:100%;height:100%;object-fit:cover}
+.bot-name{font-size:14px;font-weight:600;color:#e9d5ff;margin-bottom:2px}
+.bot-resume{font-size:11px;color:#6b7280;line-height:1.4;margin-bottom:8px}
+.bot-footer{display:flex;align-items:center;justify-content:space-between}
+.bot-cat{font-size:10px;padding:2px 8px;border-radius:10px;background:#1e1040;color:#a78bfa;border:0.5px solid #2a1f4e}
+.like-btn{display:flex;align-items:center;gap:3px;font-size:11px;color:#6b7280;cursor:pointer;background:none;border:none;font-family:inherit;transition:color 0.2s}
+.like-btn.liked{color:#ec4899}
+.privacy-badge{position:absolute;top:8px;right:8px;font-size:9px;padding:2px 6px;border-radius:8px;background:#1e1040;color:#6b7280;border:0.5px solid #2a1f4e}
+.share-btn{position:absolute;top:8px;left:8px;font-size:9px;padding:2px 6px;border-radius:8px;background:#1e1040;color:#6b7280;border:0.5px solid #2a1f4e;cursor:pointer}
+.chat-btn{width:100%;margin-top:8px;padding:7px;border-radius:10px;background:#7c3aed;color:#fff;border:none;font-size:12px;cursor:pointer;font-family:inherit;transition:background 0.2s}
+.chat-btn:hover{background:#6d28d9}
+.form-card{background:#12102a;border:0.5px solid #2a1f4e;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.form-label{font-size:12px;color:#9ca3af;margin-bottom:4px;display:block}
+.form-input{width:100%;padding:9px 12px;background:#0d0d1a;border:0.5px solid #2a1f4e;border-radius:8px;color:#e9d5ff;font-size:13px;font-family:inherit;outline:none;transition:border 0.2s}
+.form-input:focus{border-color:#7c3aed}
+.form-input::placeholder{color:#374151}
+textarea.form-input{resize:vertical}
+.avatar-upload{display:flex;align-items:center;gap:12px}
+.avatar-preview{width:56px;height:56px;border-radius:50%;background:#1e1040;border:2px dashed #4c1d95;display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden;cursor:pointer}
+.avatar-preview img{width:100%;height:100%;object-fit:cover}
+.upload-btn{padding:7px 14px;background:#1e1040;border:0.5px solid #4c1d95;color:#a78bfa;border-radius:8px;cursor:pointer;font-size:12px;font-family:inherit}
+.vis-toggle{display:flex;gap:6px}
+.vis-opt{padding:5px 14px;border-radius:10px;font-size:12px;cursor:pointer;border:0.5px solid #2a1f4e;background:#12102a;color:#6b7280;transition:all 0.2s}
+.vis-opt.active{border-color:#7c3aed;color:#c4b5fd;background:#1e1040}
+.btn-purple{width:100%;padding:11px;border-radius:10px;background:#7c3aed;color:#fff;border:none;font-size:14px;cursor:pointer;font-family:inherit;transition:background 0.2s}
+.btn-purple:hover{background:#6d28d9}
+.profile-header{padding:20px 16px;text-align:center;border-bottom:0.5px solid #2a1f4e}
+.profile-avatar-big{width:72px;height:72px;border-radius:50%;background:#1e1040;border:2px solid #7c3aed;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 10px;overflow:hidden}
+.profile-avatar-big img{width:100%;height:100%;object-fit:cover}
+.profile-name{font-size:18px;font-weight:600;color:#e9d5ff}
+.profile-stats{display:flex;gap:20px;justify-content:center;margin-top:12px}
+.stat{text-align:center}.stat-n{font-size:16px;font-weight:600;color:#c4b5fd}.stat-l{font-size:11px;color:#6b7280}
+.profile-tabs{display:flex;border-bottom:0.5px solid #2a1f4e}
+.ptab{flex:1;padding:10px;text-align:center;font-size:13px;color:#6b7280;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s}
+.ptab.active{color:#c4b5fd;border-bottom-color:#7c3aed}
+.profile-bots{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 16px}
+.edit-actions{display:flex;gap:6px;margin-top:8px}
+.edit-btn{flex:1;padding:6px;border-radius:8px;font-size:11px;cursor:pointer;font-family:inherit;border:0.5px solid #2a1f4e;background:#1e1040;color:#9ca3af;transition:all 0.2s}
+.edit-btn:hover{border-color:#7c3aed;color:#c4b5fd}
+.del-btn{padding:6px 10px;border-radius:8px;font-size:11px;cursor:pointer;font-family:inherit;border:0.5px solid #2a1f4e;background:#1e1040;color:#ef4444}
+.settings-group{background:#12102a;border:0.5px solid #2a1f4e;border-radius:14px;overflow:hidden;margin-bottom:12px}
+.settings-item{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:0.5px solid #2a1f4e}
+.settings-item:last-child{border-bottom:none}
+.settings-label{font-size:14px;color:#e9d5ff}
+.settings-select{background:#0d0d1a;border:0.5px solid #2a1f4e;border-radius:8px;padding:4px 8px;color:#c4b5fd;font-size:12px;font-family:inherit;outline:none}
+.toggle{width:36px;height:20px;border-radius:10px;background:#2a1f4e;position:relative;cursor:pointer;transition:background 0.2s;flex-shrink:0}
+.toggle.on{background:#7c3aed}
+.toggle::after{content:'';width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transition:left 0.2s}
+.toggle.on::after{left:18px}
+.auth-page{padding:32px 20px;text-align:center;max-width:400px;margin:0 auto}
+.auth-logo{font-size:28px;font-weight:600;color:#c4b5fd;margin-bottom:6px}.auth-logo span{color:#7c3aed}
+.auth-sub{font-size:14px;color:#6b7280;margin-bottom:24px}
+.auth-btn{width:100%;padding:12px;border-radius:12px;font-size:14px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;border:0.5px solid #2a1f4e;background:#12102a;color:#e9d5ff;transition:all 0.2s}
+.auth-btn:hover{border-color:#7c3aed;background:#1e1040}
+.auth-divider{font-size:12px;color:#374151;margin:12px 0}
+.auth-submit{width:100%;padding:12px;border-radius:12px;background:#7c3aed;color:#fff;border:none;font-size:14px;cursor:pointer;font-family:inherit;margin-top:4px}
+.auth-switch{font-size:13px;color:#6b7280;margin-top:14px;cursor:pointer}
+.auth-switch span{color:#a78bfa}
+.chat-page{display:flex;flex-direction:column;height:calc(100vh - 57px)}
+.chat-header{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:0.5px solid #2a1f4e;background:#12102a}
+.chat-avatar-sm{width:38px;height:38px;border-radius:50%;background:#1e1040;display:flex;align-items:center;justify-content:center;font-size:18px;overflow:hidden;flex-shrink:0}
+.chat-avatar-sm img{width:100%;height:100%;object-fit:cover}
+.chat-name{font-size:15px;font-weight:600;color:#e9d5ff}
+.chat-status{font-size:11px;color:#7c3aed}
+.back-btn{margin-left:auto;background:transparent;border:0.5px solid #2a1f4e;color:#9ca3af;padding:5px 12px;border-radius:10px;cursor:pointer;font-size:12px;font-family:inherit;flex-shrink:0}
+.messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:80%;padding:9px 13px;border-radius:14px;font-size:13px;line-height:1.6}
+.msg-bot{background:#12102a;border:0.5px solid #2a1f4e;color:#e9d5ff;align-self:flex-start;border-bottom-left-radius:3px}
+.msg-user{background:#7c3aed;color:#fff;align-self:flex-end;border-bottom-right-radius:3px}
+.chat-input-area{display:flex;gap:8px;padding:10px 14px;background:#12102a;border-top:0.5px solid #2a1f4e}
+.chat-input{flex:1;padding:9px 14px;background:#0d0d1a;border:0.5px solid #2a1f4e;border-radius:18px;color:#e9d5ff;font-size:13px;font-family:inherit;outline:none}
+.chat-input:focus{border-color:#7c3aed}
+.chat-input::placeholder{color:#374151}
+.send-btn{width:38px;height:38px;border-radius:50%;background:#7c3aed;border:none;color:#fff;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.typing{display:flex;gap:4px;align-items:center;padding:9px 13px;background:#12102a;border:0.5px solid #2a1f4e;border-radius:14px;border-bottom-left-radius:3px;align-self:flex-start}
+.dot{width:6px;height:6px;border-radius:50%;background:#7c3aed;animation:bounce 1.2s infinite}
+.dot:nth-child(2){animation-delay:0.2s}.dot:nth-child(3){animation-delay:0.4s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e1040;border:0.5px solid #7c3aed;color:#c4b5fd;padding:10px 20px;border-radius:20px;font-size:13px;z-index:999;opacity:0;transition:opacity 0.3s;pointer-events:none}
+.toast.show{opacity:1}
+.empty{text-align:center;padding:30px 16px;color:#6b7280;font-size:13px}
 </style>
 </head>
 <body>
 
 <nav>
   <div class="logo" onclick="showPage('home')">Purple<span>.</span>ai</div>
-  <div class="nav-btns">
-    <button class="btn btn-ghost" onclick="showPage('home')">Accueil</button>
-    <button class="btn btn-ghost" onclick="showPage('create')">Créer un bot</button>
+  <div class="nav-right">
+    <div class="nav-icon" onclick="showPage('create')" title="Créer">➕</div>
+    <div class="nav-icon" onclick="showPage('settings')" title="Paramètres">⚙️</div>
+    <div class="nav-icon" onclick="goProfile()" title="Profil">👤</div>
   </div>
 </nav>
 
+<div class="toast" id="toast"></div>
+
 <div id="page-home" class="page active">
-  <div class="hero">
-    <h1>Discute avec des personnages <span>uniques</span></h1>
-    <p>Crée tes propres bots ou explore ceux de la communauté. Des discussions profondes, immersives et inoubliables.</p>
-    <div class="hero-btns">
-      <button class="btn-large btn-purple" onclick="showPage('create')">Créer un personnage</button>
-      <button class="btn-large btn-outline" onclick="document.getElementById('bots').scrollIntoView({behavior:'smooth'})">Explorer les bots</button>
-    </div>
+  <div class="search-bar">
+    <span style="color:#6b7280;font-size:16px">🔍</span>
+    <input class="search-input" id="search-input" placeholder="Rechercher un personnage..." oninput="filterBots()">
   </div>
-  <div id="bots">
-    <p class="section-title">Personnages populaires</p>
-    <p class="section-sub">Créés par la communauté</p>
-    <div class="bots-grid" id="bots-grid"></div>
-  </div>
+  <div class="cats" id="cats"></div>
+  <div class="bots-grid" id="bots-grid"></div>
 </div>
 
 <div id="page-create" class="page">
-  <div style="padding: 2rem 2rem 1rem; text-align:center;">
-    <p class="section-title">Crée ton personnage</p>
-    <p class="section-sub">Donne-lui une âme</p>
-  </div>
-  <div class="create-section">
+  <div style="padding:14px">
+    <div style="font-size:16px;font-weight:600;color:#e9d5ff;margin-bottom:14px">Créer un personnage</div>
     <div class="form-card">
-      <div class="form-group">
-        <label class="form-label">Photo du personnage</label>
+      <div>
+        <label class="form-label">Photo</label>
         <div class="avatar-upload">
           <div class="avatar-preview" id="avatar-preview" onclick="document.getElementById('avatar-input').click()">📷</div>
-          <div>
-            <button class="upload-btn" onclick="document.getElementById('avatar-input').click()">Choisir une image</button>
-            <p style="font-size:12px; color:#374151; margin-top:6px;">JPG, PNG — recommandé carré</p>
-          </div>
+          <button class="upload-btn" onclick="document.getElementById('avatar-input').click()">Choisir une image</button>
         </div>
         <input type="file" id="avatar-input" accept="image/*" style="display:none" onchange="previewAvatar(event)">
       </div>
-      <div class="form-group">
+      <div>
         <label class="form-label">Nom du personnage</label>
         <input class="form-input" id="bot-name" type="text" placeholder="Ex: Luna, Shadow, Aria...">
       </div>
-      <div class="form-group">
-        <label class="form-label">Résumé <span style="color:#6b7280;">(affiché sous le nom)</span></label>
-        <input class="form-input" id="bot-resume" type="text" placeholder="Ex: Gardienne des rêves et des secrets...">
+      <div>
+        <label class="form-label">Résumé (affiché sous le nom)</label>
+        <input class="form-input" id="bot-resume" type="text" placeholder="Ex: Gardienne des rêves et secrets...">
       </div>
-      <div class="form-group">
+      <div>
+        <label class="form-label">Catégorie</label>
+        <select class="form-input" id="bot-category">
+          <option value="">Choisir une catégorie</option>
+          <option>Ennemis</option><option>Couple</option><option>Boys Love</option><option>Girls Love</option>
+          <option>Camarades</option><option>Professeur</option><option>Amis</option><option>Mafia</option>
+          <option>Brother's best friend</option><option>Plus âgés</option><option>Fantastique</option>
+          <option>Garde du corps</option><option>Mariage arrangé</option><option>Coup de foudre</option>
+          <option>Patron</option><option>Motard</option><option>Mariage</option>
+        </select>
+      </div>
+      <div>
         <label class="form-label">Personnalité</label>
-        <input class="form-input" id="bot-personality" type="text" placeholder="Ex: Mystérieuse, romantique, poétique...">
+        <input class="form-input" id="bot-personality" type="text" placeholder="Ex: Mystérieuse, romantique...">
       </div>
-      <div class="form-group">
+      <div>
         <label class="form-label">Description complète</label>
-        <textarea class="form-input" id="bot-desc" placeholder="Décris son histoire, son univers, ses habitudes..." maxlength="10000"></textarea>
+        <textarea class="form-input" id="bot-desc" placeholder="Son histoire, son univers..." style="min-height:60px" maxlength="10000"></textarea>
       </div>
-      <div class="form-group">
-        <label class="form-label">Message d'accueil</label>
-        <textarea class="form-input greeting-input" id="bot-greeting" placeholder="Ce que dit le bot en premier... (10 000 caractères max)" maxlength="10000"></textarea>
+      <div>
+        <label class="form-label">Message d'accueil (10 000 caractères max)</label>
+        <textarea class="form-input" id="bot-greeting" placeholder="Ce que dit le bot en premier..." style="min-height:140px" maxlength="10000"></textarea>
       </div>
-      <button class="btn-large btn-purple" style="width:100%;" onclick="createBot()">Créer le personnage ✨</button>
+      <div>
+        <label class="form-label">Visibilité</label>
+        <div class="vis-toggle">
+          <div class="vis-opt active" id="vis-pub" onclick="setVis('pub')">🌍 Public</div>
+          <div class="vis-opt" id="vis-priv" onclick="setVis('priv')">🔒 Privé</div>
+        </div>
+      </div>
+      <button class="btn-purple" onclick="createBot()">Créer le personnage ✨</button>
     </div>
+  </div>
+</div>
+
+<div id="page-profile" class="page">
+  <div class="profile-header">
+    <div class="profile-avatar-big" id="profile-avatar">👤</div>
+    <div class="profile-name" id="profile-name">Mon profil</div>
+    <div style="font-size:12px;color:#6b7280" id="profile-email"></div>
+    <div class="profile-stats">
+      <div class="stat"><div class="stat-n" id="stat-bots">0</div><div class="stat-l">Bots créés</div></div>
+      <div class="stat"><div class="stat-n" id="stat-likes">0</div><div class="stat-l">Likes reçus</div></div>
+      <div class="stat"><div class="stat-n" id="stat-liked">0</div><div class="stat-l">Bots aimés</div></div>
+    </div>
+  </div>
+  <div class="profile-tabs">
+    <div class="ptab active" onclick="switchTab(this,'mes-bots')">Mes bots</div>
+    <div class="ptab" onclick="switchTab(this,'likes')">🔒 Aimés</div>
+  </div>
+  <div id="tab-mes-bots" class="profile-bots"></div>
+  <div id="tab-likes" style="display:none;padding:12px 16px"></div>
+</div>
+
+<div id="page-settings" class="page">
+  <div style="padding:16px">
+    <div style="font-size:16px;font-weight:600;color:#e9d5ff;margin-bottom:14px">Paramètres</div>
+    <div class="settings-group">
+      <div class="settings-item">
+        <span class="settings-label">Langue</span>
+        <select class="settings-select" onchange="changeLang(this.value)">
+          <option value="fr">Français</option>
+          <option value="en">English</option>
+          <option value="es">Español</option>
+          <option value="de">Deutsch</option>
+          <option value="ja">日本語</option>
+          <option value="pt">Português</option>
+        </select>
+      </div>
+      <div class="settings-item">
+        <span class="settings-label">Notifications</span>
+        <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+      </div>
+    </div>
+    <div class="settings-group">
+      <div class="settings-item">
+        <span class="settings-label">Email</span>
+        <span class="settings-label" id="settings-email" style="font-size:12px;color:#6b7280"></span>
+      </div>
+      <div class="settings-item" style="cursor:pointer" onclick="showPage('auth')">
+        <span class="settings-label" style="color:#ef4444">Se déconnecter</span>
+        <span>🚪</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="page-auth" class="page">
+  <div class="auth-page">
+    <div class="auth-logo">Purple<span>.</span>ai</div>
+    <div class="auth-sub">Rejoins la communauté</div>
+    <button class="auth-btn" onclick="authGoogle()">🔵 Continuer avec Google</button>
+    <div class="auth-divider">— ou avec ton email —</div>
+    <input class="form-input" id="auth-email" type="email" placeholder="Email" style="margin-bottom:8px">
+    <input class="form-input" id="auth-password" type="password" placeholder="Mot de passe" style="margin-bottom:8px">
+    <button class="auth-submit" id="auth-submit" onclick="authEmail()">Se connecter</button>
+    <div class="auth-switch" id="auth-switch" onclick="toggleAuthMode()">Pas de compte ? <span>S'inscrire</span></div>
   </div>
 </div>
 
@@ -170,194 +259,309 @@ textarea.form-input { resize: vertical; min-height: 60px; }
       </div>
       <button class="back-btn" onclick="showPage('home')">← Retour</button>
     </div>
-    <div class="chat-body">
-      <div class="history-panel">
-        <div class="history-title">CONVERSATIONS</div>
-        <button class="new-conv-btn" onclick="newConversation()">+ Nouvelle conversation</button>
-        <div class="history-list" id="history-list"></div>
-      </div>
-      <div class="chat-main">
-        <div class="messages" id="messages"></div>
-        <div class="chat-input-area">
-          <input class="chat-input" id="chat-input" placeholder="Écris ton message..." onkeydown="if(event.key==='Enter')sendMessage()">
-          <button class="send-btn" onclick="sendMessage()">➤</button>
-        </div>
-      </div>
+    <div class="messages" id="messages"></div>
+    <div class="chat-input-area">
+      <input class="chat-input" id="chat-input" placeholder="Écris ton message..." onkeydown="if(event.key==='Enter')sendMessage()">
+      <button class="send-btn" onclick="sendMessage()">➤</button>
     </div>
   </div>
 </div>
 
 <script>
+const CATS = ['Tous','Ennemis','Couple','Boys Love','Girls Love','Camarades','Professeur','Amis','Mafia','Brother\'s best friend','Plus âgés','Fantastique','Garde du corps','Mariage arrangé','Coup de foudre','Patron','Motard','Mariage'];
 let currentBot = null;
 let currentAvatar = null;
-let currentBotIdx = null;
-let messages = [];
-let currentConvId = null;
-
+let visibilite = 'pub';
+let authMode = 'login';
+let currentUser = JSON.parse(localStorage.getItem('purpleai_user') || 'null');
+let currentToken = localStorage.getItem('purpleai_token') || null;
+let chatMessages = [];
+let currentCat = 'Tous';
 let bots = JSON.parse(localStorage.getItem('purpleai_bots') || 'null') || [
-  { name: 'Luna', avatar: null, emoji: '🌙', resume: 'Gardienne des rêves et des secrets de la nuit.', personality: 'Mystérieuse et poétique', desc: 'Tu es Luna, une entité mystérieuse liée à la lune et aux rêves.', greeting: 'Je t\'attendais... Les étoiles m\'ont parlé de toi.' },
-  { name: 'Shadow', avatar: null, emoji: '👁️', resume: 'Une âme ancienne qui observe tout en silence.', personality: 'Sombre et énigmatique', desc: 'Tu es Shadow, une présence sombre et ancienne qui voit tout.', greeting: 'Tu as osé entrer dans l\'obscurité. Intéressant.' },
-  { name: 'Aria', avatar: null, emoji: '🌸', resume: 'Elle vit pour les histoires d\'amour et la poésie.', personality: 'Douce et romantique', desc: 'Tu es Aria, une âme romantique qui vit pour la beauté et l\'amour.', greeting: 'Bonjour... chaque rencontre est une nouvelle histoire 💜' },
-  { name: 'Zephyr', avatar: null, emoji: '🌊', resume: 'Esprit du vent qui ne s\'attache à rien.', personality: 'Libre et aventurier', desc: 'Tu es Zephyr, un esprit libre comme le vent, toujours en mouvement.', greeting: 'Le monde est grand. Où veux-tu aller aujourd\'hui ?' },
+  {id:'1',name:'Luna',avatar:null,emoji:'🌙',resume:'Gardienne des rêves et secrets',personality:'Mystérieuse et poétique',desc:'Tu es Luna, gardienne des rêves.',greeting:'Je t\'attendais... Les étoiles m\'ont parlé de toi.',category:'Fantastique',is_public:true,likes:24,liked:false},
+  {id:'2',name:'Shadow',avatar:null,emoji:'👁️',resume:'Âme sombre et énigmatique',personality:'Sombre et énigmatique',desc:'Tu es Shadow, une présence sombre.',greeting:'Tu as osé entrer dans l\'obscurité. Intéressant.',category:'Ennemis',is_public:true,likes:18,liked:false},
+  {id:'3',name:'Aria',avatar:null,emoji:'🌸',resume:'Romantique et poétique',personality:'Douce et romantique',desc:'Tu es Aria, une âme romantique.',greeting:'Bonjour... chaque rencontre est une nouvelle histoire 💜',category:'Couple',is_public:true,likes:31,liked:false},
+  {id:'4',name:'Zephyr',avatar:null,emoji:'🌊',resume:'Esprit libre et aventurier',personality:'Libre et aventurier',desc:'Tu es Zephyr, un esprit libre.',greeting:'Le monde est grand. Où veux-tu aller aujourd\'hui ?',category:'Amis',is_public:true,likes:9,liked:false},
 ];
 
-function getConvKey(botIdx) { return `purpleai_conv_${botIdx}`; }
+function saveBots(){try{localStorage.setItem('purpleai_bots',JSON.stringify(bots))}catch(e){}}
 
-function getConversations(botIdx) {
-  try { return JSON.parse(localStorage.getItem(getConvKey(botIdx)) || '[]'); } catch(e) { return []; }
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  if(id==='profile')renderProfile();
+  if(id==='settings')renderSettings();
 }
 
-function saveConversations(botIdx, convs) {
-  try { localStorage.setItem(getConvKey(botIdx), JSON.stringify(convs)); } catch(e) {}
+function goProfile(){
+  if(!currentUser){showPage('auth');return;}
+  showPage('profile');
 }
 
-function showPage(id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + id).classList.add('active');
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
 }
 
-function previewAvatar(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    currentAvatar = e.target.result;
-    const preview = document.getElementById('avatar-preview');
-    preview.innerHTML = `<img src="${currentAvatar}" alt="avatar">`;
+function renderCats(){
+  const el=document.getElementById('cats');
+  el.innerHTML=CATS.map(c=>`<div class="cat${c===currentCat?' active':''}" onclick="filterCat('${c}')">${c}</div>`).join('');
+}
+
+function filterCat(cat){
+  currentCat=cat;
+  renderCats();
+  renderBots();
+}
+
+function filterBots(){
+  renderBots();
+}
+
+function renderBots(){
+  const grid=document.getElementById('bots-grid');
+  const search=document.getElementById('search-input').value.toLowerCase();
+  let filtered=bots.filter(b=>b.is_public);
+  if(currentCat!=='Tous')filtered=filtered.filter(b=>b.category===currentCat);
+  if(search)filtered=filtered.filter(b=>b.name.toLowerCase().includes(search)||b.resume.toLowerCase().includes(search));
+  if(!filtered.length){grid.innerHTML='<div class="empty" style="grid-column:span 2">Aucun personnage trouvé</div>';return;}
+  grid.innerHTML=filtered.map((b,i)=>`
+    <div class="bot-card">
+      ${!b.is_public?'<div class="privacy-badge">🔒</div>':''}
+      <div class="share-btn" onclick="shareBot('${b.id}',event)">🔗</div>
+      <div class="bot-avatar">${b.avatar?`<img src="${b.avatar}" alt="${b.name}">`:(b.emoji||'🤖')}</div>
+      <div class="bot-name">${b.name}</div>
+      <div class="bot-resume">${b.resume||''}</div>
+      <div class="bot-footer">
+        <span class="bot-cat">${b.category||'Général'}</span>
+        <button class="like-btn${b.liked?' liked':''}" onclick="toggleLike('${b.id}',event)">❤️ ${b.likes||0}</button>
+      </div>
+      <button class="chat-btn" onclick="openChat('${b.id}')">Discuter 💜</button>
+    </div>
+  `).join('');
+}
+
+function toggleLike(id,e){
+  e.stopPropagation();
+  if(!currentUser){toast('Connecte-toi pour aimer un bot !');return;}
+  const b=bots.find(b=>b.id===id);
+  if(!b)return;
+  b.liked=!b.liked;
+  b.likes=(b.likes||0)+(b.liked?1:-1);
+  saveBots();
+  renderBots();
+}
+
+function shareBot(id,e){
+  e.stopPropagation();
+  const url=`${window.location.origin}?bot=${id}`;
+  navigator.clipboard.writeText(url).then(()=>toast('Lien copié ! 🔗')).catch(()=>toast(url));
+}
+
+function openChat(id){
+  const b=bots.find(b=>b.id===id);
+  if(!b)return;
+  currentBot=b;
+  chatMessages=[{role:'bot',text:b.greeting}];
+  document.getElementById('chat-avatar').innerHTML=b.avatar?`<img src="${b.avatar}" alt="${b.name}">`:(b.emoji||'🤖');
+  document.getElementById('chat-bot-name').textContent=b.name;
+  renderMessages();
+  showPage('chat');
+}
+
+function renderMessages(){
+  const el=document.getElementById('messages');
+  el.innerHTML=chatMessages.map(m=>`<div class="msg msg-${m.role}">${m.text}</div>`).join('');
+  el.scrollTop=el.scrollHeight;
+}
+
+async function sendMessage(){
+  const input=document.getElementById('chat-input');
+  const text=input.value.trim();
+  if(!text)return;
+  input.value='';
+  chatMessages.push({role:'user',text});
+  renderMessages();
+  const typingEl=document.createElement('div');
+  typingEl.className='typing';
+  typingEl.innerHTML='<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+  document.getElementById('messages').appendChild(typingEl);
+  document.getElementById('messages').scrollTop=99999;
+  try{
+    const history=chatMessages.slice(0,-1).map(m=>({role:m.role==='user'?'user':'assistant',content:m.text}));
+    const res=await fetch('/api/chat',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        systemPrompt:`Tu es ${currentBot.name}. Personnalité: ${currentBot.personality}. ${currentBot.desc}. Tu restes toujours dans ton personnage. Tes réponses sont courtes (2-3 phrases max), immersives. Tu parles en français.`,
+        messages:[...history,{role:'user',content:text}]
+      })
+    });
+    const data=await res.json();
+    typingEl.remove();
+    chatMessages.push({role:'bot',text:data.reply||'...'});
+    renderMessages();
+  }catch(e){
+    typingEl.remove();
+    chatMessages.push({role:'bot',text:'Une erreur est survenue...'});
+    renderMessages();
+  }
+}
+
+function previewAvatar(event){
+  const file=event.target.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    currentAvatar=e.target.result;
+    document.getElementById('avatar-preview').innerHTML=`<img src="${currentAvatar}" alt="avatar">`;
   };
   reader.readAsDataURL(file);
 }
 
-function saveBots() {
-  try { localStorage.setItem('purpleai_bots', JSON.stringify(bots)); } catch(e) {}
+function setVis(v){
+  visibilite=v;
+  document.getElementById('vis-pub').classList.toggle('active',v==='pub');
+  document.getElementById('vis-priv').classList.toggle('active',v==='priv');
 }
 
-function renderBots() {
-  const grid = document.getElementById('bots-grid');
-  grid.innerHTML = bots.map((b, i) => `
-    <div class="bot-card">
-      <div class="bot-avatar">${b.avatar ? `<img src="${b.avatar}" alt="${b.name}">` : (b.emoji || '🤖')}</div>
-      <div class="bot-name">${b.name}</div>
-      <div class="bot-resume">${b.resume || b.personality}</div>
-      <button class="chat-btn" onclick="openChat(${i})">Discuter 💜</button>
-    </div>
-  `).join('');
-}
-
-function createBot() {
-  const name = document.getElementById('bot-name').value.trim();
-  const resume = document.getElementById('bot-resume').value.trim();
-  const personality = document.getElementById('bot-personality').value.trim();
-  const desc = document.getElementById('bot-desc').value.trim();
-  const greeting = document.getElementById('bot-greeting').value.trim();
-  if (!name) { alert('Donne un nom à ton personnage !'); return; }
-  const bot = { name, avatar: currentAvatar, emoji: '🤖', resume: resume || personality, personality, desc: desc || personality, greeting: greeting || `Bonjour, je suis ${name}...` };
+function createBot(){
+  const name=document.getElementById('bot-name').value.trim();
+  if(!name){toast('Donne un nom à ton personnage !');return;}
+  const bot={
+    id:Date.now().toString(),
+    name,
+    avatar:currentAvatar,
+    emoji:'🤖',
+    resume:document.getElementById('bot-resume').value.trim(),
+    personality:document.getElementById('bot-personality').value.trim(),
+    desc:document.getElementById('bot-desc').value.trim(),
+    greeting:document.getElementById('bot-greeting').value.trim()||`Bonjour, je suis ${name}...`,
+    category:document.getElementById('bot-category').value,
+    is_public:visibilite==='pub',
+    likes:0,
+    liked:false,
+  };
   bots.unshift(bot);
   saveBots();
+  currentAvatar=null;
+  document.getElementById('avatar-preview').innerHTML='📷';
+  ['bot-name','bot-resume','bot-personality','bot-desc','bot-greeting'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('bot-category').value='';
+  toast('Personnage créé ! ✨');
+  showPage('home');
   renderBots();
-  currentAvatar = null;
-  document.getElementById('avatar-preview').innerHTML = '📷';
-  ['bot-name','bot-resume','bot-personality','bot-desc','bot-greeting'].forEach(id => document.getElementById(id).value = '');
-  openChat(0);
 }
 
-function openChat(idx) {
-  currentBot = bots[idx];
-  currentBotIdx = idx;
-  document.getElementById('chat-avatar').innerHTML = currentBot.avatar ? `<img src="${currentBot.avatar}" alt="${currentBot.name}">` : (currentBot.emoji || '🤖');
-  document.getElementById('chat-bot-name').textContent = currentBot.name;
-  renderHistory();
-  const convs = getConversations(idx);
-  if (convs.length > 0) {
-    loadConversation(convs[0].id);
-  } else {
-    newConversation();
-  }
-  showPage('chat');
-}
-
-function newConversation() {
-  currentConvId = Date.now().toString();
-  messages = [{ role: 'bot', text: currentBot.greeting }];
-  saveCurrentConv();
-  renderHistory();
-  renderMessages();
-}
-
-function loadConversation(convId) {
-  const convs = getConversations(currentBotIdx);
-  const conv = convs.find(c => c.id === convId);
-  if (!conv) return;
-  currentConvId = convId;
-  messages = conv.messages;
-  renderHistory();
-  renderMessages();
-}
-
-function saveCurrentConv() {
-  if (!currentConvId) return;
-  const convs = getConversations(currentBotIdx).filter(c => c.id !== currentConvId);
-  const preview = messages.filter(m => m.role === 'user')[0]?.text || 'Nouvelle conversation';
-  convs.unshift({ id: currentConvId, date: new Date().toLocaleDateString('fr-FR'), preview: preview.slice(0, 40), messages });
-  saveConversations(currentBotIdx, convs.slice(0, 20));
-}
-
-function renderHistory() {
-  const list = document.getElementById('history-list');
-  const convs = getConversations(currentBotIdx);
-  if (convs.length === 0) {
-    list.innerHTML = '<div style="font-size:12px; color:#374151; padding: 8px 10px;">Aucune conversation</div>';
-    return;
-  }
-  list.innerHTML = convs.map(c => `
-    <div class="history-item ${c.id === currentConvId ? 'active' : ''}" onclick="loadConversation('${c.id}')">
-      <div class="history-item-date">${c.date}</div>
-      <div class="history-item-preview">${c.preview}</div>
+function renderProfile(){
+  if(!currentUser)return;
+  const myBots=bots;
+  document.getElementById('stat-bots').textContent=myBots.length;
+  document.getElementById('stat-likes').textContent=myBots.reduce((a,b)=>a+(b.likes||0),0);
+  document.getElementById('stat-liked').textContent=myBots.filter(b=>b.liked).length;
+  document.getElementById('profile-email').textContent=currentUser.email||'';
+  const mb=document.getElementById('tab-mes-bots');
+  mb.innerHTML=myBots.map(b=>`
+    <div class="bot-card">
+      ${!b.is_public?'<div class="privacy-badge">🔒</div>':''}
+      <div class="bot-avatar">${b.avatar?`<img src="${b.avatar}">`:(b.emoji||'🤖')}</div>
+      <div class="bot-name">${b.name}</div>
+      <div class="bot-resume">${b.resume||''}</div>
+      <div class="edit-actions">
+        <button class="edit-btn" onclick="editBot('${b.id}')">✏️ Modifier</button>
+        <button class="edit-btn" onclick="shareBot('${b.id}',event)" style="flex:none;padding:6px 10px">🔗</button>
+        <button class="del-btn" onclick="deleteBot('${b.id}')">🗑️</button>
+      </div>
     </div>
-  `).join('');
+  `).join('')||'<div class="empty" style="grid-column:span 2">Aucun bot créé</div>';
+  const liked=bots.filter(b=>b.liked);
+  document.getElementById('tab-likes').innerHTML=liked.map(b=>`
+    <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#12102a;border:0.5px solid #2a1f4e;border-radius:12px;margin-bottom:8px;cursor:pointer" onclick="openChat('${b.id}')">
+      <div style="font-size:24px">${b.avatar?`<img src="${b.avatar}" style="width:36px;height:36px;border-radius:50%;object-fit:cover">`:(b.emoji||'🤖')}</div>
+      <div><div style="font-size:14px;color:#e9d5ff">${b.name}</div><div style="font-size:11px;color:#6b7280">${b.resume||''}</div></div>
+    </div>
+  `).join('')||'<div class="empty">Aucun bot aimé</div>';
 }
 
-function renderMessages() {
-  const el = document.getElementById('messages');
-  el.innerHTML = messages.map(m => `<div class="msg msg-${m.role}">${m.text}</div>`).join('');
-  el.scrollTop = el.scrollHeight;
+function switchTab(el,tab){
+  document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-mes-bots').style.display=tab==='mes-bots'?'grid':'none';
+  document.getElementById('tab-likes').style.display=tab==='likes'?'block':'none';
 }
 
-async function sendMessage() {
-  const input = document.getElementById('chat-input');
-  const text = input.value.trim();
-  if (!text) return;
-  input.value = '';
-  messages.push({ role: 'user', text });
-  renderMessages();
-  const typingEl = document.createElement('div');
-  typingEl.className = 'typing';
-  typingEl.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
-  document.getElementById('messages').appendChild(typingEl);
-  document.getElementById('messages').scrollTop = 99999;
-  try {
-    const history = messages.slice(0, -1).map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', content: m.text }));
-    const res = await fetch('/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        systemPrompt: `Tu es ${currentBot.name}. Personnalité: ${currentBot.personality}. ${currentBot.desc}. Tu restes toujours dans ton personnage. Tes réponses sont courtes (2-3 phrases max), immersives et dans le style de ta personnalité. Tu parles en français.`,
-        messages: [...history, { role: 'user', content: text }]
-      })
+function editBot(id){
+  const b=bots.find(b=>b.id===id);
+  if(!b)return;
+  document.getElementById('bot-name').value=b.name;
+  document.getElementById('bot-resume').value=b.resume||'';
+  document.getElementById('bot-personality').value=b.personality||'';
+  document.getElementById('bot-desc').value=b.desc||'';
+  document.getElementById('bot-greeting').value=b.greeting||'';
+  document.getElementById('bot-category').value=b.category||'';
+  setVis(b.is_public?'pub':'priv');
+  if(b.avatar){currentAvatar=b.avatar;document.getElementById('avatar-preview').innerHTML=`<img src="${b.avatar}">`;}
+  deleteBot(id);
+  showPage('create');
+}
+
+function deleteBot(id){
+  bots=bots.filter(b=>b.id!==id);
+  saveBots();
+  renderProfile();
+  renderBots();
+  toast('Bot supprimé');
+}
+
+function renderSettings(){
+  document.getElementById('settings-email').textContent=currentUser?.email||'Non connecté';
+}
+
+function changeLang(lang){
+  toast('Langue changée !');
+}
+
+async function authGoogle(){
+  toast('Connexion Google bientôt disponible !');
+}
+
+async function authEmail(){
+  const email=document.getElementById('auth-email').value.trim();
+  const password=document.getElementById('auth-password').value.trim();
+  if(!email||!password){toast('Remplis tous les champs !');return;}
+  try{
+    const res=await fetch('/api/auth',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({action:authMode==='login'?'login':'signup',email,password})
     });
-    const data = await res.json();
-    typingEl.remove();
-    messages.push({ role: 'bot', text: data.reply || '...' });
-    saveCurrentConv();
-    renderHistory();
-    renderMessages();
-  } catch(e) {
-    typingEl.remove();
-    messages.push({ role: 'bot', text: 'Une erreur est survenue... réessaie.' });
-    renderMessages();
+    const data=await res.json();
+    if(data.access_token){
+      currentToken=data.access_token;
+      currentUser={email,id:data.user?.id};
+      localStorage.setItem('purpleai_token',currentToken);
+      localStorage.setItem('purpleai_user',JSON.stringify(currentUser));
+      toast('Connecté ! 🎉');
+      showPage('profile');
+    } else {
+      toast(data.error_description||data.msg||'Erreur de connexion');
+    }
+  }catch(e){
+    toast('Erreur de connexion');
   }
 }
 
+function toggleAuthMode(){
+  authMode=authMode==='login'?'signup':'login';
+  document.getElementById('auth-submit').textContent=authMode==='login'?'Se connecter':'S\'inscrire';
+  document.getElementById('auth-switch').innerHTML=authMode==='login'?'Pas de compte ? <span>S\'inscrire</span>':'Déjà un compte ? <span>Se connecter</span>';
+}
+
+const urlBot=new URLSearchParams(window.location.search).get('bot');
+if(urlBot){const b=bots.find(b=>b.id===urlBot);if(b)openChat(b.id);}
+
+renderCats();
 renderBots();
 </script>
 </body>
